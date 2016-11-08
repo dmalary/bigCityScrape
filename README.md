@@ -30,3 +30,6 @@
 ### Links
 
 - [Scrape data](https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_A)
+
+- Concepts
+  - [Cron Job](https://github.com/kelektiv/node-cron)
