@@ -1,3 +1,6 @@
+// ====================
+// === Server setup ===
+// ====================
 var express   = require('express'),
     fs        = require('fs'),
     request   = require('request'),
@@ -30,3 +33,5 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 app.get('scrape', function(req, res){
 
 });
+
+exports = exports.module = app;
