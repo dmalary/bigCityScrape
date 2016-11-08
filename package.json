@@ -1,0 +1,25 @@
+{
+  "name": "big_city_scrape",
+  "version": "1.0.0",
+  "description": "web scraper",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madhat5/bigCityScrape.git"
+  },
+  "author": "madhat5",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/madhat5/bigCityScrape/issues"
+  },
+  "homepage": "https://github.com/madhat5/bigCityScrape#readme",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "express": "^4.14.0",
+    "request": "^2.78.0"
+  }
+}
