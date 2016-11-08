@@ -28,10 +28,12 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 
 
 // ===============
-// === Scra[er ===
+// === Scraper ===
 // ===============
 app.get('scrape', function(req, res){
+  var url = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_'
 
+  
 });
 
 exports = exports.module = app;
