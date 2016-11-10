@@ -5,7 +5,8 @@ var express   = require('express'),
     fs        = require('fs'),
     request   = require('request'),
     cheerio   = require('cheerio'),
-    CronJob   = require('cron').CronJob;
+    CronJob   = require('cron').CronJob,
+    jsonfile  = require('jsonfile');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.get('scrape', function(req, res){
   };
 
   var json = [];
+  var file = '/tmp/data.json';
 
   var reqCount = 0;
   var itemCount = 0;
@@ -77,9 +79,15 @@ app.get('scrape', function(req, res){
         });
       };
 
-      fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
+      jsonfile.writeFile(file, json, function(err){
         console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
       });
+      // ===============
+      // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
+      //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
+      // });
+      // ===============
+
       res.send('Check console for status');
     )}; // end of request
   }; // end of pageLetter for loop
