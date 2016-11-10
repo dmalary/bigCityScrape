@@ -43,14 +43,15 @@ app.get('scrape', function(req, res){
   ];
 
   var city, country;
-  var cities = {
+  var citiesObj = {
     city: '',
     country: ''
   };
 
-  var count = 0;
   var json = [];
 
+  var reqCount = 0;
+  var itemCount = 0;
 
   for (var n = 0; n < pageLetter.length; n++){
     url2 = url1 + pageLetter.n;
@@ -62,12 +63,24 @@ app.get('scrape', function(req, res){
         var $ = cheerio.load(body);
         console.log('On page:' $('span:has(small)').text())
 
-        $('').each(function(index){
+        $('tr:has(td)').each(function(index){
           var data = $(this);
 
+          city = data.find('a').[itemCount];
+          country = data.find('a')[itemCount + 1];
+          citiesObj.city = city;
+          citiesObj.country = country;
+          json.push(citiesObj)
 
+          itemCount += 2;
+          // reqCount++;
         });
       };
+
+      fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
+        console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
+      });
+      res.send('Check console for status');
     )}; // end of request
   }; // end of pageLetter for loop
 }); // end of app.get
