@@ -31,59 +31,65 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 // ===============
 // === Scraper ===
 // ===============
+var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
+var url2;
 
-  var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
-  var url2;
+var pageLetter = [
+  'A', 'B', 'C', 'D', 'E',
+  'F', 'G', 'H', 'I', 'J',
+  'K', 'L', 'M', 'N', 'O',
+  'P', 'Q', 'R', 'S', 'T',
+  'U', 'V', 'W', 'X', 'Y', 'Z'
+];
 
-  var pageLetter = [
-    'a', 'b', 'c', 'd', 'e',
-    'f', 'g', 'h', 'i', 'j',
-    'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't',
-    'u', 'v', 'w', 'x', 'y', 'z'
-  ];
+var city, country;
+var citiesObj = {
+  city: '',
+  country: ''
+};
 
-  var city, country;
-  var citiesObj = {
-    city: '',
-    country: ''
-  };
+var json = [];
+var file = '/data/data.json';
 
-  var json = [];
-  var file = '/data/data.json';
+var reqCount = 0;
+var itemCount = 0;
 
-  var reqCount = 0;
-  var itemCount = 0;
+for (var n = 0; n < pageLetter.length; n++){
+  url2 = url1 + pageLetter[n];
+  // console.log(url2);
 
-  for (var n = 0; n < pageLetter.length; n++){
-    url2 = url1 + pageLetter[n];
-app.get('/scrape', function(req, res){
-    request(url2, function(err, res, body){
-      if (err){
-        console.log('Error: ' + err);
-      } else if (!err){
+  app.get('/scrape', function(req, res){
+    request(url2, function(err_r, res_r, body){
+      if (err_r){
+        console.log('Error: ' + err_r);
+      } else if (!err_r){
         var $ = cheerio.load(body);
-        console.log('On page: ' + $('span:has(small)').text())
+        console.log('On page: ' + $('span:has(small)').text());
 
         $('tr:has(td)').each(function(index){
           var data = $(this);
 
-          city = data.find('a')[itemCount];
-          country = data.find('a')[itemCount + 1];
-          citiesObj.city = city;
-          citiesObj.country = country;
-          json.push(citiesObj);
+          city = data.find('a')[itemCount].children[0].data;
+          country = data.find('a')[itemCount + 1].children[0].data;
+          console.log(city + '--' + country);
+          // citiesObj.city = city;
+          // citiesObj.country = country;
+          // json.push(citiesObj);
 
           itemCount += 2;
           // reqCount++;
         });
       };
 
-      jsonfile.writeFile(file, json, function(err){
-        console.log('====================================' + '\n' +
-        'File created!' + '\n' + 'JSON file located in project Dir' +
-        '\n' + '====================================' );
-      });
+      // ==================
+      // === Write File ===
+      // ==================
+      // jsonfile.writeFile(file, json, function(err){
+      //   console.log('====================================' + '\n' +
+      //   'File created!' + '\n' + 'JSON file located in project Dir' +
+      //   '\n' + '====================================' );
+      // });
+
       // ===============
       // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
       //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
@@ -92,7 +98,7 @@ app.get('/scrape', function(req, res){
 
     }); // end of request
     res.send('Check console for status');
-}); // end of app.get
+  }); // end of app.get
 }; // end of pageLetter for loop
 
 exports = exports.module = app;
