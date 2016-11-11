@@ -32,7 +32,7 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 // === Scraper ===
 // ===============
 app.get('/scrape', function(req, res){
-  var url = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
+  var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
   var url2;
 
   var pageLetter = [
@@ -56,7 +56,7 @@ app.get('/scrape', function(req, res){
   var itemCount = 0;
 
   for (var n = 0; n < pageLetter.length; n++){
-    url2 = url1 + pageLetter.n;
+    url2 = url1 + pageLetter[n];
 
     request(url2, function(err, res, body){
       if (err){
