@@ -57,6 +57,9 @@ var itemCount = 0;
 for (var n = 0; n < pageLetter.length; n++){
   url2 = url1 + pageLetter[n];
   // console.log(url2);
+  if (n === pageLetter.length - 1){
+    console.log("=== URL's generated ===")
+  };
 
   app.get('/scrape', function(req, res){
     request(url2, function(err_r, res_r, body){
@@ -64,14 +67,13 @@ for (var n = 0; n < pageLetter.length; n++){
         console.log('Error: ' + err_r);
       } else if (!err_r){
         var $ = cheerio.load(body);
-        console.log('On page: ' + $('span:has(small)').text());
+        console.log('=== On page: ' + $('span:has(small)').text() + ' ===');
 
         $('tr:has(td)').each(function(index){
           var data = $(this);
-
           city = data.find('a')[itemCount].children[0].data;
           country = data.find('a')[itemCount + 1].children[0].data;
-          console.log(city + '--' + country);
+          console.log(city + ' -- ' + country);
           // citiesObj.city = city;
           // citiesObj.country = country;
           // json.push(citiesObj);
@@ -97,7 +99,7 @@ for (var n = 0; n < pageLetter.length; n++){
       // ===============
 
     }); // end of request
-    res.send('Check console for status');
+    res.send('=== Check terminal for status ===');
   }); // end of app.get
 }; // end of pageLetter for loop
 
