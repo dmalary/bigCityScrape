@@ -60,7 +60,7 @@ app.get('/scrape', function(req, res){
 
     request(url2, function(err, res, body){
       if (err){
-        console.log('Error' + err);
+        console.log('Error: ' + err);
       } else if (!err){
         var $ = cheerio.load(body);
         console.log('On page: ' + $('span:has(small)').text())
@@ -72,7 +72,7 @@ app.get('/scrape', function(req, res){
           country = data.find('a')[itemCount + 1];
           citiesObj.city = city;
           citiesObj.country = country;
-          json.push(citiesObj)
+          json.push(citiesObj);
 
           itemCount += 2;
           // reqCount++;
