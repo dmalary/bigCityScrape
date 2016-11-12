@@ -14,9 +14,56 @@ var port = process.env.PORT || 8081;
 app.listen(port);
 console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server started on: ' + port);
 
-// ================
+// =================
+// === Variables ===
+// =================
+var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
+var url2;
+
+var pageLetter = [
+  'A', 'B', 'C', 'D', 'E',
+  'F', 'G', 'H', 'I', 'J',
+  'K', 'L', 'M', 'N', 'O',
+  'P', 'Q', 'R', 'S', 'T',
+  'U', 'V', 'W', 'X', 'Y', 'Z'
+];
+
+var city, country, refLink;
+var citiesObj = {
+  city: '',
+  country: '',
+  refLink: ''
+};
+
+var json = [];
+var file = '/data/data.json';
+
+// =================
+// === Functions ===
+// =================
+
+// === URL Check ===
+var urlCheck = function(){
+  if (n === pageLetter.length - 1){
+    console.log("=== Scraper URL's generated ===")
+  };
+};
+
+// === Write File ===
+var dataWrite = function(){
+  jsonfile.writeFile(file, json, function(err){
+    console.log('=====================================' + '\n' +
+    'File created!' + '\n' + 'JSON file located in: ' + file +
+    '\n' + '=====================================');
+  });
+  // ===============
+  // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
+  //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
+  // });
+  // ===============
+};
+
 // === Cron Job ===
-// ================
 // var job = new CronJob({
 //   cronTime: '',
 //   onTick: function() {
@@ -27,72 +74,51 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 //   start: true
 // });
 
-
-// ===============
 // === Scraper ===
-// ===============
-app.get('/scrape', function(req, res){
-  var url = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
-  var url2;
-
-  var pageLetter = [
-    'a', 'b', 'c', 'd', 'e',
-    'f', 'g', 'h', 'i', 'j',
-    'k', 'l', 'm', 'n', 'o',
-    'p', 'q', 'r', 's', 't',
-    'u', 'v', 'w', 'x', 'y', 'z'
-  ];
-
-  var city, country;
-  var citiesObj = {
-    city: '',
-    country: ''
-  };
-
-  var json = [];
-  var file = '/tmp/data.json';
-
-  var reqCount = 0;
-  var itemCount = 0;
-
-  for (var n = 0; n < pageLetter.length; n++){
-    url2 = url1 + pageLetter.n;
-
-    request(url2, function(err, res, body){
-      if (err){
-        console.log('Error' + err);
-      } else if (!err){
+var scrape = function(){
+  app.get('/scrape', function(req, res){
+    request(url2, function(err_r, res_r, body){
+      if (err_r){
+        console.log('Error: ' + err_r);
+      } else if (!err_r){
         var $ = cheerio.load(body);
-        console.log('On page: ' + $('span:has(small)').text())
+        console.log('=== On page: ' + $('span:has(small)').text() + ' ===');
 
-        $('tr:has(td)').each(function(index){
+        $('tr:has(td)').each(function(){
           var data = $(this);
+          // console.log(data.find('a'))
 
-          city = data.find('a')[itemCount];
-          country = data.find('a')[itemCount + 1];
+          city = data.find('a')[0].children[0].data;
+          country = data.find('a')[1].children[0].data;
+          // refLink = data.find('a').attribs.href.data;
+          // console.log(city + ' -- ' + country);
+          if (city == 'Zakopane'){
+            console.log('=== Data located ===');
+          };
+
           citiesObj.city = city;
           citiesObj.country = country;
-          json.push(citiesObj)
-
-          itemCount += 2;
-          // reqCount++;
+          json.push(citiesObj);
         });
       };
 
-      jsonfile.writeFile(file, json, function(err){
-        console.log('====================================' + '\n' +
-        'File created!' + '\n' + 'JSON file located in project Dir' +
-        '\n' + '====================================' );
-      });
-      // ===============
-      // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
-      //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
-      // });
-      // ===============
+      console.log(citiesObj);
+      dataWrite();
 
-      res.send('Check console for status');
     }); // end of request
-  }; // end of pageLetter for loop
-}); // end of app.get
+    res.send('Check terminal for status');
+  }); // end of app.get
+}; // end of scrape()
 
 exports = exports.module = app;
+
+// ==================
+// === Script Run ===
+// ==================
+for (var n = 0; n < pageLetter.length; n++){
+  url2 = url1 + pageLetter[n];
+  // console.log(url2);
+
+  urlCheck();
+  scrape();
+};
