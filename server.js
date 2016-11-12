@@ -38,8 +38,6 @@ var citiesObj = {
 var json = [];
 var file = '/data/data.json';
 
-var itemCount = 0;
-
 // =================
 // === Functions ===
 // =================
@@ -47,18 +45,16 @@ var itemCount = 0;
 // === URL Check ===
 var urlCheck = function(){
   if (n === pageLetter.length - 1){
-    console.log('===============================' + '\n' +
-      "=== Scraper URL's generated ===" +
-      '\n' + '===============================')
+    console.log("=== Scraper URL's generated ===")
   };
 };
 
 // === Write File ===
-var writeFile = function(){
+var dataWrite = function(){
   jsonfile.writeFile(file, json, function(err){
-    console.log('====================================' + '\n' +
-    'File created!' + '\n' + 'JSON file located in project Dir' +
-    '\n' + '====================================' );
+    console.log('=====================================' + '\n' +
+    'File created!' + '\n' + 'JSON file located in: ' + file +
+    '\n' + '=====================================');
   });
   // ===============
   // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
@@ -90,26 +86,31 @@ var scrape = function(){
 
         $('tr:has(td)').each(function(){
           var data = $(this);
-          // city = data.find('a')[itemCount].children[0].data;
-          // country = data.find('a')[itemCount + 1].children[0].data;
-          city = data.find('a')[itemCount].title;
-          country = data.find('a')[itemCount + 1].title;
-          console.log(city + ' -- ' + country);
-          console.log(itemCount);
+          // console.log(data.find('a'))
+
+          city = data.find('a')[0].children[0].data;
+          country = data.find('a')[1].children[0].data;
+          // refLink = data.find('a').attribs.href.data;
+          // console.log(city + ' -- ' + country);
+          if (city == 'Zakopane'){
+            console.log('=== Data located ===');
+          };
+
           citiesObj.city = city;
           citiesObj.country = country;
           json.push(citiesObj);
-
-          itemCount += 2;
         });
       };
 
-      writeFile();
+      console.log(citiesObj);
+      dataWrite();
 
     }); // end of request
     res.send('Check terminal for status');
   }); // end of app.get
 }; // end of scrape()
+
+exports = exports.module = app;
 
 // ==================
 // === Script Run ===
@@ -121,5 +122,3 @@ for (var n = 0; n < pageLetter.length; n++){
   urlCheck();
   scrape();
 };
-
-exports = exports.module = app;
