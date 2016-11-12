@@ -32,5 +32,16 @@
 - [Scrape data](https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_A)
 
 - Concepts
+  - [Scraper build1](https://scotch.io/tutorials/scraping-the-web-with-node-js)
+  - [Scraper build2](http://dillonbuchanan.com/programming/html-scraping-in-nodejs-with-cheerio/)
+  - [Scraper build3](https://www.smashingmagazine.com/2015/04/web-scraping-with-nodejs/)
   - [Cron Job](https://github.com/kelektiv/node-cron)
   - [Write File](https://www.npmjs.com/package/jsonfile)
+---
+
+### Debug
+
+  - scrape data locate debug (x)
+  - scrape data save debug (o)
+  - write file debug
+  - add refLink
