@@ -28,10 +28,11 @@ var pageLetter = [
   'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
-var city, country;
+var city, country, refLink;
 var citiesObj = {
   city: '',
-  country: ''
+  country: '',
+  refLink: ''
 };
 
 var json = [];
@@ -89,8 +90,10 @@ var scrape = function(){
 
         $('tr:has(td)').each(function(){
           var data = $(this);
-          city = data.find('a')[itemCount].children[0].data;
-          country = data.find('a')[itemCount + 1].children[0].data;
+          // city = data.find('a')[itemCount].children[0].data;
+          // country = data.find('a')[itemCount + 1].children[0].data;
+          city = data.find('a')[itemCount].title;
+          country = data.find('a')[itemCount + 1].title;
           console.log(city + ' -- ' + country);
           console.log(itemCount);
           citiesObj.city = city;
