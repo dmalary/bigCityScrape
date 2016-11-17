@@ -1,13 +1,14 @@
 // ====================
 // === Server setup ===
 // ====================
-var express   = require('express'),
-    fs        = require('fs'),
-    request   = require('request'),
-    cheerio   = require('cheerio'),
+var express       = require('express'),
+    fs            = require('fs'),
+    request       = require('request'),
+    cheerio       = require('cheerio'),
     // CronJob   = require('cron').CronJob,
-    jsonfile  = require('jsonfile'),
-    prompt     = require('prompt');
+    jsonfile      = require('jsonfile'),
+    prompt        = require('prompt'),
+    Progressbar   = require('progress');
 
 var app = express();
 
@@ -25,6 +26,7 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 // =================
 var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
 var url2;
+var urlCheck = false;
 
 var pageLetter = [
   'A', 'B', 'C', 'D', 'E',
@@ -62,9 +64,10 @@ var schema = {
 
 // === URL Check ===
 var urlCheck = function(n){
-  var number = n;
-  if (number === pageLetter.length - 1){
-    console.log("=== Scraper URL's generated ===")
+  if (n === pageLetter.length - 1){
+    console.log("=== Scraper URL's generated");
+    urlCheck = true;
+    return urlCheck;
   };
 };
 
@@ -101,7 +104,7 @@ var scrape = function(url2){
         console.log('Error: ' + err_r);
       } else if (!err_r){
         var $ = cheerio.load(body);
-        console.log('=== On page: ' + $('span:has(small)').text() + ' ===');
+        console.log('=== On page: ' + $('span:has(small)').text());
 
         $('tr:has(td)').each(function(){
           var data = $(this);
@@ -112,7 +115,7 @@ var scrape = function(url2){
           // refLink = data.find('a').attribs.href.data;
           // console.log(city + ' -- ' + country);
           if (city == 'Zakopane'){
-            console.log('=== Data located ===');
+            console.log('=== Data Scaped');
           };
 
           citiesObj.city = city;
@@ -122,7 +125,7 @@ var scrape = function(url2){
       };
 
       console.log(citiesObj);
-      dataWrite();
+      dataWrite(json);
 
     }); // end of request
     res.send('Check terminal for status');
@@ -138,10 +141,10 @@ prompt.get(schema, function(err, result){
   var r = result.confirm.toLowerCase();
 
   if (r != 'y' && r != 'yes'){
-    console.log('=== Scrape cancelled ===');
+    console.log('=== Scrape cancelled');
     return;
   } else {
-    console.log('=== Running Scrape ===');
+    console.log('=== Initializing');
     for (var n = 0; n < pageLetter.length; n++){
       url2 = url1 + pageLetter[n];
       // console.log(url2);
@@ -159,7 +162,10 @@ prompt.get(schema, function(err, result){
       //   });
       // } else {
         urlCheck(n);
-        scrape(url2);
+        if (urlCheck == true){
+          console.log('=== Running Scrape');
+          scrape(url2);
+        };
       // };
     }
   }
