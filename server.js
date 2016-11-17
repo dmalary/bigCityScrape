@@ -6,9 +6,11 @@ var express   = require('express'),
     request   = require('request'),
     cheerio   = require('cheerio'),
     // CronJob   = require('cron').CronJob,
-    jsonfile  = require('jsonfile');
+    jsonfile  = require('jsonfile'),
+    prompt     = require('prompt');
 
 var app = express();
+prompt.start();
 
 var port = process.env.PORT || 8081;
 app.listen(port);
@@ -37,6 +39,9 @@ var citiesObj = {
 
 var json = [];
 var file = '/data/data.json';
+
+var scrapeRun       = 'Run scraper? (Y/N)',
+    scrapeContinue  = 'Continue scraper? (Y/N)';
 
 // =================
 // === Functions ===
@@ -115,10 +120,26 @@ exports = exports.module = app;
 // ==================
 // === Script Run ===
 // ==================
-for (var n = 0; n < pageLetter.length; n++){
-  url2 = url1 + pageLetter[n];
-  // console.log(url2);
-
-  urlCheck();
-  scrape();
-};
+prompt.get([scrapeRun], function(err, result){
+  if (result.scrapeRun === 'Y' || 'y') {
+    for (var n = 0; n < pageLetter.length; n++){
+      url2 = url1 + pageLetter[n];
+      // console.log(url2);
+      if (n > 0){
+        prompt.get([scrapeContinue], function(err, result){
+          if (result.scrapeContinue === 'Y' || 'y') {
+            urlCheck();
+            scrape();
+          } else {
+            console.log('Scrape cancelled.');
+          };
+        };
+      } else {
+        urlCheck();
+        scrape();
+      };
+    };
+  } else {
+    console.log('Scrape cancelled.');
+  };
+});
