@@ -10,7 +10,11 @@ var express   = require('express'),
     prompt     = require('prompt');
 
 var app = express();
+
 prompt.start();
+prompt.message = '';
+prompt.delimiter = '';
+prompt.colors = false;
 
 var port = process.env.PORT || 8081;
 app.listen(port);
@@ -40,16 +44,26 @@ var citiesObj = {
 var json = [];
 var file = '/data/data.json';
 
-var scrapeRun       = 'Run scraper? (Y/N)',
-    scrapeContinue  = 'Continue scraper? (Y/N)';
+var schema = {
+  properties: {
+    confirm: {
+      pattern: /^(yes|no|y|n)$/gi,
+      description: 'Do you want to continue?',
+      message: '(Y/N))',
+      required: true,
+      default: 'N'
+    }
+  }
+};
 
 // =================
 // === Functions ===
 // =================
 
 // === URL Check ===
-var urlCheck = function(){
-  if (n === pageLetter.length - 1){
+var urlCheck = function(n){
+  var number = n;
+  if (number === pageLetter.length - 1){
     console.log("=== Scraper URL's generated ===")
   };
 };
@@ -80,7 +94,7 @@ var dataWrite = function(){
 // });
 
 // === Scraper ===
-var scrape = function(){
+var scrape = function(url2){
   app.get('/scrape', function(req, res){
     request(url2, function(err_r, res_r, body){
       if (err_r){
@@ -120,26 +134,33 @@ exports = exports.module = app;
 // ==================
 // === Script Run ===
 // ==================
-prompt.get([scrapeRun], function(err, result){
-  if (result.scrapeRun === 'Y' || 'y') {
+prompt.get(schema, function(err, result){
+  var r = result.confirm.toLowerCase();
+
+  if (r != 'y' && r != 'yes'){
+    console.log('=== Scrape cancelled ===');
+    return;
+  } else {
+    console.log('=== Running Scrape ===');
     for (var n = 0; n < pageLetter.length; n++){
       url2 = url1 + pageLetter[n];
       // console.log(url2);
-      if (n > 0){
-        prompt.get([scrapeContinue], function(err, result){
-          if (result.scrapeContinue === 'Y' || 'y') {
-            urlCheck();
-            scrape();
-          } else {
-            console.log('Scrape cancelled.');
-          };
-        };
-      } else {
-        urlCheck();
-        scrape();
-      };
-    };
-  } else {
-    console.log('Scrape cancelled.');
-  };
+      // if (n = 13) {
+      //   prompt.get(schema, function(err, result){
+      //     var r = result.confirm.toLowerCase();
+      //
+      //     if (r != 'y' && r != 'yes'){
+      //       urlCheck();
+      //       scrape();
+      //     } else {
+      //       console.log('Scrape cancelled.');
+      //       return;
+      //     };
+      //   });
+      // } else {
+        urlCheck(n);
+        scrape(url2);
+      // };
+    }
+  }
 });

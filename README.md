@@ -37,7 +37,8 @@
   - [Scraper build3](https://www.smashingmagazine.com/2015/04/web-scraping-with-nodejs/)
   - [Cron Job](https://github.com/kelektiv/node-cron)
   - [Write File](https://www.npmjs.com/package/jsonfile)
-  - [Terminal prompt](https://docs.nodejitsu.com/articles/command-line/how-to-prompt-for-command-line-input/)
+  - [Terminal prompt1](https://docs.nodejitsu.com/articles/command-line/how-to-prompt-for-command-line-input/)
+  - [Terminal prompt2](https://andidittrich.de/2015/12/node-js-simple-command-line-confirm-messages.html)
 ---
 
 ### Debug
