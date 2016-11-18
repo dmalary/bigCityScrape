@@ -48,5 +48,6 @@
 - scrape data locate debug (x)
 - scrape data save debug (o)
 - write file debug
+- automate scrape debug
 - add refLink data
-- add format progress bar
+- add terminal progress bar
