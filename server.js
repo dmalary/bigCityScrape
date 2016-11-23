@@ -73,11 +73,12 @@ var urlCheck = function(n){
 
 // === Write File ===
 var dataWrite = function(){
-  jsonfile.writeFile(file, json, function(err){
-    console.log('=====================================' + '\n' +
-    'File created!' + '\n' + 'JSON file located in: ' + file +
-    '\n' + '=====================================');
-  });
+  console.log(json);
+  // jsonfile.writeFile(file, json, function(err){
+  //   console.log('=====================================' + '\n' +
+  //   'File created!' + '\n' + 'JSON file located in: ' + file +
+  //   '\n' + '=====================================');
+  // });
   // ===============
   // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
   //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
@@ -95,6 +96,9 @@ var dataWrite = function(){
 //   },
 //   start: true
 // });
+
+
+
 
 // === Scraper ===
 var scrape = function(url2){
@@ -115,7 +119,7 @@ var scrape = function(url2){
           // refLink = data.find('a').attribs.href.data;
           // console.log(city + ' -- ' + country);
           if (city == 'Zakopane'){
-            console.log('=== Data Scaped');
+            console.log('=== Data Scraped');
           };
 
           citiesObj.city = city;
@@ -125,6 +129,7 @@ var scrape = function(url2){
       };
 
       console.log(citiesObj);
+      return json
       dataWrite(json);
 
     }); // end of request
@@ -141,7 +146,7 @@ prompt.get(schema, function(err, result){
   var r = result.confirm.toLowerCase();
 
   if (r != 'y' && r != 'yes'){
-    console.log('=== Scrape cancelled');
+    console.log('=== SCRAPE CANCELLED!');
     return;
   } else {
     console.log('=== Initializing');
@@ -165,8 +170,17 @@ prompt.get(schema, function(err, result){
         if (urlCheck == true){
           console.log('=== Running Scrape');
           scrape(url2);
+        } else if (urlCheck == false){
+          console.log('=== URL LOAD FAILED!')
         };
       // };
-    }
+    };
+    // ==================
+    // if (json.length > 3){
+    //   dataWrite();
+    // } else {
+    //   console.log('=== INSUFFICIENT DATA!');
+    // };
+    // ==================
   }
 });
