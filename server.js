@@ -5,7 +5,6 @@ var express       = require('express'),
     fs            = require('fs'),
     request       = require('request'),
     cheerio       = require('cheerio'),
-    // CronJob   = require('cron').CronJob,
     jsonfile      = require('jsonfile'),
     prompt        = require('prompt'),
     Progressbar   = require('progress');
@@ -85,20 +84,6 @@ var dataWrite = function(){
   // });
   // ===============
 };
-
-// === Cron Job ===
-// var job = new CronJob({
-//   cronTime: '',
-//   onTick: function() {
-//     var r = request('http://127.0.0.1:8081/scrape', function(error, response, body){
-//       console.log('==================' + '\n' + 'Scrapper running' + '\n' + '==================');
-//     });
-//   },
-//   start: true
-// });
-
-
-
 
 // === Scraper ===
 var scrape = function(url2){

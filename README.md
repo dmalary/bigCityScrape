@@ -51,3 +51,4 @@
 - automate scrape debug
 - add refLink data
 - add terminal progress bar
+- add yearly CronJob
