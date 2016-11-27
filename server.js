@@ -27,6 +27,7 @@ var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_
 var url2;
 var url3 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_A';
 var urlCheck = false;
+var count = 0;
 
 var pageLetter = [
   'A', 'B', 'C', 'D', 'E',
@@ -110,13 +111,16 @@ var scrape = function(){
 
           citiesObj.city = city;
           citiesObj.country = country;
-          json.push(citiesObj);
+          // json.push(citiesObj);
+          json[count] = citiesObj;
+          count++;
         });
       };
 
-      // console.log(citiesObj);
-      // return json
-      dataWrite(json);
+      // dataWrite(json);
+      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
+        console.log('### File created >>> JSON file located in project directory');
+      });
 
     }); // end of request
     res.send('Check terminal for status');
