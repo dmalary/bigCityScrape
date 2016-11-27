@@ -73,23 +73,23 @@ var urlCheck = function(n){
 
 // === Write File ===
 var dataWrite = function(){
-  console.log(json);
+  // console.log(json);
   // jsonfile.writeFile(file, json, function(err){
   //   console.log('=====================================' + '\n' +
   //   'File created!' + '\n' + 'JSON file located in: ' + file +
   //   '\n' + '=====================================');
   // });
   // ===============
-  // fs.writeFile('cityPopu.json', JSON.stringify(json, null, 4), function(err){
-  //   console.log('====================================' + '\n' + 'File created!' + '\n' + 'JSON file located in project Dir' + '\n' + '====================================' );
-  // });
+  fs.writeFile('/data/data.json', JSON.stringify(json, null, 4), function(err){
+    console.log('### File created >>> JSON file located in project directory');
+  });
   // ===============
 };
 
 // === Scraper ===
-var scrape = function(url2){
+var scrape = function(){
   app.get('/scrape', function(req, res){
-    request(url2, function(err_r, res_r, body){
+    request(url3, function(err_r, res_r, body){
       if (err_r){
         console.log('Error: ' + err_r);
       } else if (!err_r){
@@ -114,8 +114,8 @@ var scrape = function(url2){
         });
       };
 
-      console.log(citiesObj);
-      return json
+      // console.log(citiesObj);
+      // return json
       dataWrite(json);
 
     }); // end of request
@@ -136,8 +136,22 @@ prompt.get(schema, function(err, result){
     return;
   } else {
     console.log('=== Initializing');
-    for (var n = 0; n < pageLetter.length; n++){
-      url2 = url1 + pageLetter[n];
+    scrape(url3);
+  }
+});
+
+
+// NEXT FEATURES:
+
+    // =========================================
+    // =========================================
+    // MULTIPLE URL LOOP
+    // =========================================
+    // for (var n = 0; n < pageLetter.length; n++){
+    //   url2 = url1 + pageLetter[n];
+      // =========================================
+      // USER PROMPT TO CONTINUE MID-SCRAPE
+      // =========================================
       // console.log(url2);
       // if (n = 13) {
       //   prompt.get(schema, function(err, result){
@@ -152,15 +166,19 @@ prompt.get(schema, function(err, result){
       //     };
       //   });
       // } else {
-        urlCheck(n);
-        if (urlCheck == true){
-          console.log('=== Running Scrape');
-          scrape(url2);
-        } else if (urlCheck == false){
-          console.log('=== URL LOAD FAILED!')
-        };
+      // =========================================
+        // urlCheck(n);
+        // if (urlCheck == true){
+        //   console.log('=== Running Scrape');
+        //   scrape(url2);
+        // } else if (urlCheck == false){
+        //   console.log('=== URL LOAD FAILED!')
+        // };
       // };
-    };
+    // };
+    // =========================================
+    // =========================================
+
     // ==================
     // if (json.length > 3){
     //   dataWrite();
@@ -168,5 +186,3 @@ prompt.get(schema, function(err, result){
     //   console.log('=== INSUFFICIENT DATA!');
     // };
     // ==================
-  }
-});
