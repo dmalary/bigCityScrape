@@ -111,9 +111,9 @@ var scrape = function(){
 
           citiesObj.city = city;
           citiesObj.country = country;
-          // json.push(citiesObj);
-          json[count] = citiesObj;
-          count++;
+          json.push(citiesObj);
+          // json[count] = citiesObj;
+          // count++;
         });
       };
 
@@ -140,6 +140,7 @@ prompt.get(schema, function(err, result){
     return;
   } else {
     console.log('=== Initializing');
+    console.log('=== Please load: http://localhost:8081/scrape')
     scrape(url3);
   }
 });
