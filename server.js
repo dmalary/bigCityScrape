@@ -81,9 +81,9 @@ var dataWrite = function(){
   //   '\n' + '=====================================');
   // });
   // ===============
-  fs.writeFile('/data/data.json', JSON.stringify(json, null, 4), function(err){
-    console.log('### File created >>> JSON file located in project directory');
-  });
+  // fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
+  //   console.log('### File created >>> JSON file located in project directory');
+  // });
   // ===============
 };
 
@@ -101,8 +101,8 @@ var scrape = function(){
           var data = $(this);
           // console.log(data.find('a'))
 
-          city = data.find('a')[0].children[0].data;
-          country = data.find('a')[1].children[0].data;
+          city = data.find('a')[count].children[0].data;
+          country = data.find('a')[count + 1].children[0].data;
           // refLink = data.find('a').attribs.href.data;
           // console.log(city + ' -- ' + country);
           if (city == 'Zakopane'){
@@ -113,7 +113,7 @@ var scrape = function(){
           citiesObj.country = country;
           json.push(citiesObj);
           // json[count] = citiesObj;
-          // count++;
+          count += 2;
         });
       };
 
