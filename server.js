@@ -25,6 +25,7 @@ console.log('Silence please...' + '\n' + 'Curtains up...' + '\n' + 'Server start
 // =================
 var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_';
 var url2;
+var url3 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_A';
 var urlCheck = false;
 
 var pageLetter = [
