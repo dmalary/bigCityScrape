@@ -27,7 +27,6 @@ var url1 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_
 var url2;
 var url3 = 'https://en.wikipedia.org/wiki/List_of_towns_and_cities_with_100,000_or_more_inhabitants/cityname:_A';
 var urlCheck = false;
-var count = 0;
 
 var pageLetter = [
   'A', 'B', 'C', 'D', 'E',
@@ -37,12 +36,12 @@ var pageLetter = [
   'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
-var city, country, refLink;
-var citiesObj = {
-  city: '',
-  country: '',
-  refLink: ''
-};
+// var city, country, refLink;
+// var citiesObj = {
+//   city: '',
+//   country: '',
+//   refLink: ''
+// };
 
 var json = [];
 var file = '/data/data.json';
@@ -99,10 +98,16 @@ var scrape = function(){
 
         $('tr:has(td)').each(function(){
           var data = $(this);
+          var city, country, refLink;
+          var citiesObj = {
+            city: '',
+            country: '',
+            refLink: ''
+          };
           // console.log(data.find('a'))
 
-          city = data.find('a')[count].children[0].data;
-          country = data.find('a')[count + 1].children[0].data;
+          city = data.find('a')[0].children[0].data;
+          country = data.find('a')[1].children[0].data;
           // refLink = data.find('a').attribs.href.data;
           // console.log(city + ' -- ' + country);
           if (city == 'Zakopane'){
@@ -111,14 +116,15 @@ var scrape = function(){
 
           citiesObj.city = city;
           citiesObj.country = country;
+          // console.log(citiesObj.city + ' ++ ' + citiesObj.country);
+          // console.log(citiesObj);
           json.push(citiesObj);
-          // json[count] = citiesObj;
-          count += 2;
+          // console.log(json);
         });
       };
 
       // dataWrite(json);
-      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
+      fs.writeFile('data1.json', JSON.stringify(json, null, 4), function(err){
         console.log('### File created >>> JSON file located in project directory');
       });
 
