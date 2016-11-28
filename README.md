@@ -55,9 +55,11 @@
 ### Debug
 
 - scrape data locate debug (x)
-- scrape data save debug (o)
-- write file debug
-- automate scrape debug
+- scrape data save debug (x)
+- write file debug (x)
+- automate scrape debug (x)
+  - add to master (o)
+- multipage scrape (o)
 - add refLink data
 - add terminal progress bar
 - add yearly CronJob
