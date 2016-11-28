@@ -89,7 +89,7 @@ var dataWrite = function(){
 // === Scraper ===
 var scrape = function(){
   app.get('/scrape', function(req, res){
-    request(url3, function(err_r, res_r, body){
+    request(url2, function(err_r, res_r, body){
       if (err_r){
         console.log('Error: ' + err_r);
       } else if (!err_r){
@@ -104,8 +104,8 @@ var scrape = function(){
             country: '',
             refLink: ''
           };
-          // console.log(data.find('a'))
 
+          // console.log(data.find('a'))
           city = data.find('a')[0].children[0].data;
           country = data.find('a')[1].children[0].data;
           // refLink = data.find('a').attribs.href.data;
@@ -124,7 +124,7 @@ var scrape = function(){
       };
 
       // dataWrite(json);
-      fs.writeFile('data1.json', JSON.stringify(json, null, 4), function(err){
+      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
         console.log('### File created >>> JSON file located in project directory');
       });
 
@@ -147,49 +147,22 @@ prompt.get(schema, function(err, result){
   } else {
     console.log('=== Initializing');
     console.log('=== Please load: http://localhost:8081/scrape')
-    scrape(url3);
-  }
+    for (var n = 0; n < pageLetter.length; n++){
+      url2 = url1 + pageLetter[n];
+      // console.log(url2);
+      urlCheck(n);
+      if (urlCheck == true){
+        console.log('=== Running Scrape');
+        scrape(url2);
+      } else if (urlCheck == false){
+        console.log('=== URL LOAD FAILED!')
+      };
+    };
+  };
 });
 
 
 // NEXT FEATURES:
-
-    // =========================================
-    // =========================================
-    // MULTIPLE URL LOOP
-    // =========================================
-    // for (var n = 0; n < pageLetter.length; n++){
-    //   url2 = url1 + pageLetter[n];
-      // =========================================
-      // USER PROMPT TO CONTINUE MID-SCRAPE
-      // =========================================
-      // console.log(url2);
-      // if (n = 13) {
-      //   prompt.get(schema, function(err, result){
-      //     var r = result.confirm.toLowerCase();
-      //
-      //     if (r != 'y' && r != 'yes'){
-      //       urlCheck();
-      //       scrape();
-      //     } else {
-      //       console.log('Scrape cancelled.');
-      //       return;
-      //     };
-      //   });
-      // } else {
-      // =========================================
-        // urlCheck(n);
-        // if (urlCheck == true){
-        //   console.log('=== Running Scrape');
-        //   scrape(url2);
-        // } else if (urlCheck == false){
-        //   console.log('=== URL LOAD FAILED!')
-        // };
-      // };
-    // };
-    // =========================================
-    // =========================================
-
     // ==================
     // if (json.length > 3){
     //   dataWrite();
