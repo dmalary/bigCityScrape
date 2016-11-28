@@ -44,6 +44,7 @@ var pageLetter = [
 // };
 
 var json = [];
+var alphaArr = [];
 var file = '/data/data.json';
 
 var schema = {
@@ -71,6 +72,15 @@ var urlCheck = function(n){
   };
 };
 
+// === Connect to localhost ===
+var connect = function(){
+  request('http://localhost:8081/scrape', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log('=== Connected to http://localhost:8081/scrape');
+    };
+  });
+};
+
 // === Write File ===
 var dataWrite = function(){
   // console.log(json);
@@ -80,9 +90,9 @@ var dataWrite = function(){
   //   '\n' + '=====================================');
   // });
   // ===============
-  // fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
-  //   console.log('### File created >>> JSON file located in project directory');
-  // });
+  fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
+    console.log('### File created >>> JSON file located in project directory');
+  });
   // ===============
 };
 
@@ -98,11 +108,14 @@ var scrape = function(){
 
         $('tr:has(td)').each(function(){
           var data = $(this);
-          var city, country, refLink;
+          var city, country, refLink, alpha, pageData;
           var citiesObj = {
             city: '',
             country: '',
             refLink: ''
+          };
+          var alphaObj = {
+            alpha: pageData
           };
 
           // console.log(data.find('a'))
@@ -116,17 +129,21 @@ var scrape = function(){
 
           citiesObj.city = city;
           citiesObj.country = country;
+          alpha = $('span:has(small)').text();
+          pageData = citiesObj;
           // console.log(citiesObj.city + ' ++ ' + citiesObj.country);
           // console.log(citiesObj);
-          json.push(citiesObj);
+          // json.push(citiesObj);
+          alphaArr.push(alphaObj);
+          json.push(alphaArr);
           // console.log(json);
         });
       };
 
-      // dataWrite(json);
-      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
-        console.log('### File created >>> JSON file located in project directory');
-      });
+      dataWrite();
+      // fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
+      //   console.log('### File created >>> JSON file located in project directory');
+      // });
 
     }); // end of request
     res.send('Check terminal for status');
@@ -146,14 +163,15 @@ prompt.get(schema, function(err, result){
     return;
   } else {
     console.log('=== Initializing');
-    console.log('=== Please load: http://localhost:8081/scrape')
     for (var n = 0; n < pageLetter.length; n++){
       url2 = url1 + pageLetter[n];
       // console.log(url2);
       urlCheck(n);
+
       if (urlCheck == true){
         console.log('=== Running Scrape');
         scrape(url2);
+        connect();
       } else if (urlCheck == false){
         console.log('=== URL LOAD FAILED!')
       };
