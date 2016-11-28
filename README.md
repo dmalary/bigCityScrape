@@ -1,6 +1,14 @@
 # Big City Scraper
 ###### A web scraper for global cities over 100k inhabitants
 
+### Setup
+
+1. Clone repo
+2. npm install
+3. run nodemon
+4. follow terminal prompts
+
+
 ### Deployment flow
 
 1. Create development branch
@@ -41,6 +49,7 @@
   - [Terminal prompt1](https://docs.nodejitsu.com/articles/command-line/how-to-prompt-for-command-line-input/)
   - [Terminal prompt2](https://andidittrich.de/2015/12/node-js-simple-command-line-confirm-messages.html)
   - [Progress Bar](https://www.npmjs.com/package/progress)
+
 ---
 
 ### Debug
