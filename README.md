@@ -3,11 +3,12 @@
 
 ### Setup
 
-1. Clone repo
-2. npm install
-3. run nodemon (or node server.js)
-4. follow terminal prompts
+1. Clone repo,
+2. npm install,
+3. In terminal, run nodemon (or node server.js),
+4. Follow terminal prompts.
 
+---
 
 ### Deployment flow
 
@@ -58,7 +59,7 @@
 - scrape data save debug (x)
 - write file debug (x)
 - automate scrape debug (x)
+- add refLink data (x)
 - multipage scrape (o)
-- add refLink data (o)
 - add terminal progress bar
 - add yearly CronJob

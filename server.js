@@ -88,7 +88,7 @@ var dataWrite = function(){
   //   '\n' + '=====================================');
   // });
   // ===============
-  fs.writeFile('data2.json', JSON.stringify(json, null, 4), function(err){
+  fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
     console.log('### File created >>> JSON file located in project directory');
   });
   // ===============
@@ -131,7 +131,11 @@ var scrape = function(){
         });
       };
 
-      dataWrite();
+      if (json.length > 10){
+        dataWrite();
+      } else {
+        console.log('=== INSUFFICIENT DATA!');
+      };
 
     }); // end of request
     res.send('Check terminal for status');
