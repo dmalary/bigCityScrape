@@ -97,7 +97,7 @@ var dataWrite = function(){
 // === Scraper ===
 var scrape = function(){
   app.get('/scrape', function(req, res){
-    request(url3, function(err_r, res_r, body){
+    request(url2, (function(n) { return function(err_r, res_r, body){
       if (err_r){
         console.log('Error: ' + err_r);
       } else if (!err_r){
@@ -112,6 +112,9 @@ var scrape = function(){
             country: '',
             refLink: ''
           };
+          var alpha = {
+            n: citiesObj
+          };
           // console.log(data.find('a'));
 
           city = data.find('a')[0].children[0].data;
@@ -125,8 +128,9 @@ var scrape = function(){
           citiesObj.city = city;
           citiesObj.country = country;
           citiesObj.refLink = refLink;
+          alpha.n = citiesObj;
           // console.log(citiesObj);
-          json.push(citiesObj);
+          json.push(alpha);
           // console.log(json);
         });
       };
@@ -137,7 +141,7 @@ var scrape = function(){
         console.log('=== INSUFFICIENT DATA!');
       };
 
-    }); // end of request
+    }})(n)); // end of request
     res.send('Check terminal for status');
   }); // end of app.get
 }; // end of scrape()
@@ -155,54 +159,15 @@ prompt.get(schema, function(err, result){
     return;
   } else {
     console.log('=== Initializing');
-    scrape(url3);
-    connect();
+
+    for (n = 0; n < pageLetter.length; n++){
+      url2 = url1 + pageLetter[n];
+      // console.log(url2)
+      scrape(url2, n);
+      connect();
+    };
   }
 });
 
 
 // NEXT FEATURES:
-
-    // =========================================
-    // =========================================
-    // MULTIPLE URL LOOP
-    // =========================================
-    // for (var n = 0; n < pageLetter.length; n++){
-    //   url2 = url1 + pageLetter[n];
-      // =========================================
-      // USER PROMPT TO CONTINUE MID-SCRAPE
-      // =========================================
-      // console.log(url2);
-      // if (n = 13) {
-      //   prompt.get(schema, function(err, result){
-      //     var r = result.confirm.toLowerCase();
-      //
-      //     if (r != 'y' && r != 'yes'){
-      //       urlCheck();
-      //       scrape();
-      //     } else {
-      //       console.log('Scrape cancelled.');
-      //       return;
-      //     };
-      //   });
-      // } else {
-      // =========================================
-        // urlCheck(n);
-        // if (urlCheck == true){
-        //   console.log('=== Running Scrape');
-        //   scrape(url2);
-        // } else if (urlCheck == false){
-        //   console.log('=== URL LOAD FAILED!')
-        // };
-      // };
-    // };
-    // =========================================
-    // =========================================
-
-    // ==================
-    // if (json.length > 3){
-    //   dataWrite();
-    // } else {
-    //   console.log('=== INSUFFICIENT DATA!');
-    // };
-    // ==================
