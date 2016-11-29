@@ -71,6 +71,15 @@ var urlCheck = function(n){
   };
 };
 
+// === Connect to localhost ===
+var connect = function(){
+  request('http://localhost:8081/scrape', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      console.log('=== Connected to http://localhost:8081/scrape');
+    };
+  });
+};
+
 // === Write File ===
 var dataWrite = function(){
   // console.log(json);
@@ -124,7 +133,7 @@ var scrape = function(){
       };
 
       // dataWrite(json);
-      fs.writeFile('data1.json', JSON.stringify(json, null, 4), function(err){
+      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
         console.log('### File created >>> JSON file located in project directory');
       });
 
@@ -146,8 +155,8 @@ prompt.get(schema, function(err, result){
     return;
   } else {
     console.log('=== Initializing');
-    console.log('=== Please load: http://localhost:8081/scrape')
     scrape(url3);
+    connect();
   }
 });
 
