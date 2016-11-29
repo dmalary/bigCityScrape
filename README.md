@@ -44,6 +44,7 @@
   - [Scraper build1](https://scotch.io/tutorials/scraping-the-web-with-node-js)
   - [Scraper build2](http://dillonbuchanan.com/programming/html-scraping-in-nodejs-with-cheerio/)
   - [Scraper build3](https://www.smashingmagazine.com/2015/04/web-scraping-with-nodejs/)
+  - [Multi-page scrape](https://blog.miguelgrinberg.com/post/easy-web-scraping-with-nodejs)
   - [Cron Job](https://github.com/kelektiv/node-cron)
   - [Cron Job2](https://www.npmjs.com/package/cronfile)
   - [Write File](https://www.npmjs.com/package/jsonfile)
