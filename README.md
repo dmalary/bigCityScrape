@@ -5,7 +5,7 @@
 
 1. Clone repo
 2. npm install
-3. run nodemon
+3. run nodemon (or node server.js)
 4. follow terminal prompts
 
 
