@@ -118,9 +118,9 @@ var scrape = function(){
           country = data.find('a')[1].children[0].data;
           refLink = data.find('a')[1].attribs.href;
           // console.log(city + ' -- ' + country + ' -- ' + refLink);
-          if (city == 'Zakopane'){
-            console.log('=== Data Scraped');
-          };
+          // if (city == 'Zakopane'){
+          //   console.log('=== Data Scraped');
+          // };
 
           citiesObj.city = city;
           citiesObj.country = country;
