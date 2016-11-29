@@ -59,6 +59,6 @@
 - write file debug (x)
 - automate scrape debug (x)
 - multipage scrape (o)
-- add refLink data
+- add refLink data (o)
 - add terminal progress bar
 - add yearly CronJob

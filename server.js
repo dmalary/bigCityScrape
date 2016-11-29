@@ -82,16 +82,15 @@ var connect = function(){
 
 // === Write File ===
 var dataWrite = function(){
-  // console.log(json);
   // jsonfile.writeFile(file, json, function(err){
   //   console.log('=====================================' + '\n' +
   //   'File created!' + '\n' + 'JSON file located in: ' + file +
   //   '\n' + '=====================================');
   // });
   // ===============
-  // fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
-  //   console.log('### File created >>> JSON file located in project directory');
-  // });
+  fs.writeFile('data2.json', JSON.stringify(json, null, 4), function(err){
+    console.log('### File created >>> JSON file located in project directory');
+  });
   // ===============
 };
 
@@ -113,29 +112,26 @@ var scrape = function(){
             country: '',
             refLink: ''
           };
-          // console.log(data.find('a'))
+          // console.log(data.find('a'));
 
           city = data.find('a')[0].children[0].data;
           country = data.find('a')[1].children[0].data;
-          // refLink = data.find('a').attribs.href.data;
-          // console.log(city + ' -- ' + country);
+          refLink = data.find('a')[1].attribs.href;
+          // console.log(city + ' -- ' + country + ' -- ' + refLink);
           if (city == 'Zakopane'){
             console.log('=== Data Scraped');
           };
 
           citiesObj.city = city;
           citiesObj.country = country;
-          // console.log(citiesObj.city + ' ++ ' + citiesObj.country);
+          citiesObj.refLink = refLink;
           // console.log(citiesObj);
           json.push(citiesObj);
           // console.log(json);
         });
       };
 
-      // dataWrite(json);
-      fs.writeFile('data.json', JSON.stringify(json, null, 4), function(err){
-        console.log('### File created >>> JSON file located in project directory');
-      });
+      dataWrite();
 
     }); // end of request
     res.send('Check terminal for status');
