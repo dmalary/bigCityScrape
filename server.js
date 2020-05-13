@@ -21,26 +21,26 @@ async function listScrape() {
 
     const html = await page.content();
     const $ = cheerio.load(html);
+    // TEST
+    fs.writeFileSync('./test' + pagesAlpha[i] + '.html', html);
 
-    $('#mw-content-text > div > table > tbody > tr').each((i, el) => {
-      const cityEl = $(el).find('');
-      const countryEl = $(el).find('');
-      const cityUrlEl = $(el).find('');
-      const countryUrlEl = $(el).find('');
+    // $('#mw-content-text > div > table > tbody > tr').each((i, el) => {
+    //   const cityEl = $(el).find('td:nth-child(1) > a');
+    //   const countryEl = $(el).find('td:nth-child(2) > a');
 
-      const city = $(cityEl).;
-      const country = $(countryEl).;
-      const cityUrl = $(cityUrlEl).;
-      const countryUrl = $(countryUrlEl).;
+    //   const city = $(cityEl).text();
+    //   const country = $(countryEl).text();
+    //   const cityUrl = 'https://en.wikipedia.org' + $(cityUrlEl).attr('href');
+    //   const countryUrl = 'https://en.wikipedia.org' + $(countryUrlEl).attr('href');
 
-      const dataRow = {
-        city,
-        country,
-        cityUrl,
-        countryUrl
-      };
-    })
-  }
+    //   const dataRow = {
+    //     city,
+    //     country,
+    //     cityUrl,
+    //     countryUrl
+    //   };
+  })
+}
 }
 
 async function main() {
